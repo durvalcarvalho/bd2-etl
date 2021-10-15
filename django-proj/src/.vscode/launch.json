@@ -11,10 +11,20 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "runserver",
-                "0.0.0.0:8001"
+                "0.0.0.0:8100"
             ],
+            "env": {
+                "POSTGRES_HOST": "0.0.0.0"
+            },
             "django": true,
-            "justMyCode": false,
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Populate",
+            "type": "python",
+            "request": "launch",
+            "program": "populate.py",
+            "console": "integratedTerminal"
         }
     ]
 }

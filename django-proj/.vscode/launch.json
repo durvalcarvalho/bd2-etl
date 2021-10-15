@@ -18,6 +18,18 @@
             },
             "django": true,
             "justMyCode": false
+        },
+        {
+            "name": "Python: Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/manage.py",
+            "args": [
+                "<",
+                "scripts/populate.py"
+            ],
+            "django": true,
+            "justMyCode": false
         }
     ]
 }

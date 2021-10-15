@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Municipio(models.Model):
-    codMunicipio = models.IntegerField(primary_key=True)
+    codMunicipio = models.AutoField(primary_key=True)
     nomeMunicipio = models.CharField(max_length=200)
     siglaUf = models.CharField(max_length=4)
 
@@ -58,16 +58,17 @@ class Prova(models.Model):
             "Laranja - Adaptada Ledor (Reaplicação)"
         )
 
-    idProva = models.IntegerField(primary_key=True)
-    corCiencias = models.IntegerField(choices=CorProvaChoices)
-    corMatematica = models.IntegerField(choices=CorProvaChoices)
-    corHumanas = models.IntegerField(choices=CorProvaChoices)
-    corLinguagem = models.IntegerField(choices=CorProvaChoices)
+    idProva = models.AutoField(primary_key=True)
+
+    corNatureza = models.IntegerField(choices=CorProvaChoices.choices)
+    corHumanas = models.IntegerField(choices=CorProvaChoices.choices)
+    corLinguagem = models.IntegerField(choices=CorProvaChoices.choices)
+    corMatematica = models.IntegerField(choices=CorProvaChoices.choices)
 
 
 class Realiza(models.Model):
 
-    idResultado = models.IntegerField(primary_key=True)
+    idResultado = models.AutoField(primary_key=True)
 
     idProva = models.ForeignKey(
         to=Prova,
@@ -86,7 +87,7 @@ class Realiza(models.Model):
         PARTE_DESCONECTADA              = (9, "Parte desconectada")
 
 
-    statusRedacao = models.IntegerField(choices=StatusChoices)
+    statusRedacao = models.IntegerField(choices=StatusChoices.choices)
 
     inscricaoCandidato = models.ForeignKey(
         to=Candidato,
@@ -94,19 +95,19 @@ class Realiza(models.Model):
         related_name='realizacoes',
     )
 
-    notaCiencias = models.DecimalField(
-        decimal_places=1,
-        max_digits=4,
-        validators=[MinValueValidator(0), MaxValueValidator(1000)]
-    )
-
-    notaMatematica = models.DecimalField(
+    notaNatureza = models.DecimalField(
         decimal_places=1,
         max_digits=4,
         validators=[MinValueValidator(0), MaxValueValidator(1000)]
     )
 
     notaHumanas = models.DecimalField(
+        decimal_places=1,
+        max_digits=4,
+        validators=[MinValueValidator(0), MaxValueValidator(1000)]
+    )
+
+    notaMatematica = models.DecimalField(
         decimal_places=1,
         max_digits=4,
         validators=[MinValueValidator(0), MaxValueValidator(1000)]
@@ -128,4 +129,4 @@ class Realiza(models.Model):
         SIM = (1, "Sim")
         NAO = (0, "Não")
 
-    treineiro = models.IntegerField(choices=TreineiroChoices)
+    treineiro = models.IntegerField(choices=TreineiroChoices.choices)
