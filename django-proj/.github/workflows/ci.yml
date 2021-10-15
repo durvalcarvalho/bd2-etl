@@ -1,0 +1,73 @@
+name: CI Animalesco
+
+on: push
+
+jobs:
+  health-check-job:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PORT: 5432
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432 # exposing 5432 port for application to use
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code # checking our the code at current commit that triggers the workflow
+        uses: actions/checkout@v2
+
+      - name: Cache dependency # caching dependency will make our build faster.
+        uses: actions/cache@v2 # for more info checkout pip section documentation at https://github.com/actions/cache
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Set up Python 3.8 # setting python environment to 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8' # if you want multiple python version run just use matrix strategy in job config. See the documentation of GitHub Actions
+
+      - name: Check Python version # checking the python version to see if 3.x is installed.
+        run: python --version
+
+      # - name: Install requirements # install application requirements
+      #   run: pip install -r src/requirements.txt
+
+      # - name: ⭐ Análise folha de estilo com pycodestyle
+      #   run: pycodestyle --statistics src/.
+
+      # - name: Run Migrations # run migrations to create table in side car db container
+      #   run: python src/manage.py migrate
+      #   env:
+      #     POSTGRES_DB: postgres
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PORT: 5432
+      #     POSTGRES_PASSWORD: postgres
+
+      # - name: ⭐⭐ Run Test with django manage.py test # running tests
+      #   run: python src/manage.py test
+      #   env:
+      #     POSTGRES_DB: postgres
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PORT: 5432
+      #     POSTGRES_PASSWORD: postgres
+
+      # - name: ⭐⭐⭐ Python static code analysis with pylint
+      #   run: pylint --load-plugins pylint_django --django-settings-module=config.settings $(git ls-files '*.py')
+
+      # - name: ⭐⭐⭐⭐ Análise de cobertura de testes
+      #   run: |
+      #     coverage run src/manage.py test api
+      #     coverage report --fail-under=50
+      #   env:
+      #     POSTGRES_DB: postgres
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PORT: 5432
+      #     POSTGRES_PASSWORD: postgres
