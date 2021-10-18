@@ -15,7 +15,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./mario_dump.sql:/mario_dump.sql
+      - ./dump.sql:/dump.sql
       - var_lib_mysql:/var/lib/mysql
       - etc_mysql_confd_my_cnf:/etc/mysql/conf.d/my.cnf
       - docker_entrypoint_initdb_d:/docker-entrypoint-initdb.d
@@ -27,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    command:  ["./start.sh"]
+    command:  ["./gunicorn_start.sh"]
     ports:
       - 8000:8000 # server port
       - 8001:8001 # debug port

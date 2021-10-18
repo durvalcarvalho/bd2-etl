@@ -1,0 +1,1 @@
+mysqldump --skip-extended-insert -u root -p enem > dump.sql

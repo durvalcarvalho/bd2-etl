@@ -7,10 +7,11 @@ class Municipio(models.Model):
     nomeMunicipio = models.CharField(max_length=200)
     siglaUf = models.CharField(max_length=4)
 
+    def __str__(self) -> str:
+        return f"{self.codMunicipio} - {self.nomeMunicipio} - {self.siglaUf}"
 
 class Candidato(models.Model):
     inscricao = models.CharField(max_length=12, primary_key=True)
-
 
     class SexoChoices(models.TextChoices):
         MASCULINO = ('M', "MASCULINO")
@@ -39,31 +40,65 @@ class Candidato(models.Model):
         related_name='candidatos',
     )
 
+    def __str__(self) -> str:
+        return f"{self.inscricao} - {self.sexo} - {self.idade} - {self.cor} - {self.codMunicipio}"
+
 
 class Prova(models.Model):
 
     class CorProvaChoices(models.IntegerChoices):
-        AZUL = (507, "Azul")
-        AMARELA = (508, "Amarela")
-        BRANCA = (509, "Branca")
-        ROSA = (510, "Rosa")
-        LARANJA_ADAPTADA_LEDOR = (520, "Laranja - Adaptada Ledor")
-        VERDE_VIDEOPROVA_LIBRAS = (524, "Verde - Videoprova - Libras")
-        AZUL_REAPLICACAO = (547, "Azul (Reaplicação)")
-        AMARELO_REAPLICACAO = (548, "Amarelo (Reaplicação)")
-        BRANCO_REAPLICACAO = (549, "Branco (Reaplicação)")
-        ROSA_REAPLICACAO = (550, "Rosa (Reaplicação)")
+        AZUL = (1, "Azul")
+        AMARELA = (2, "Amarela")
+        BRANCA = (3, "Branca")
+        ROSA = (4, "Rosa")
+        LARANJA_ADAPTADA_LEDOR = (5, "Laranja - Adaptada Ledor")
+        VERDE_VIDEOPROVA_LIBRAS = (6, "Verde - Videoprova - Libras")
+        AZUL_REAPLICACAO = (7, "Azul (Reaplicação)")
+        AMARELO_REAPLICACAO = (8, "Amarela (Reaplicação)")
+        BRANCO_REAPLICACAO = (9, "Branco (Reaplicação)")
+        ROSA_REAPLICACAO = (10, "Rosa (Reaplicação)")
         LARANJA_ADAPTADA_LEDOR_REAPLICACAO = (
-            564,
+            11,
             "Laranja - Adaptada Ledor (Reaplicação)"
         )
+        CINZA = (12, "Cinza")
+        CINZA_REAPLICACAO = (13, "Cinza (Reaplicação)")
 
     idProva = models.AutoField(primary_key=True)
 
-    corNatureza = models.IntegerField(choices=CorProvaChoices.choices)
-    corHumanas = models.IntegerField(choices=CorProvaChoices.choices)
-    corLinguagem = models.IntegerField(choices=CorProvaChoices.choices)
-    corMatematica = models.IntegerField(choices=CorProvaChoices.choices)
+    corNatureza = models.IntegerField(
+        choices=CorProvaChoices.choices,
+        null=True,
+        blank=True,
+    )
+
+    corHumanas = models.IntegerField(
+        choices=CorProvaChoices.choices,
+        null=True,
+        blank=True,
+    )
+
+    corLinguagem = models.IntegerField(
+        choices=CorProvaChoices.choices,
+        null=True,
+        blank=True,
+    )
+
+    corMatematica = models.IntegerField(
+        choices=CorProvaChoices.choices,
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self) -> str:
+        return (
+            f"{self.idProva} - "
+            f"{self.corNatureza} - "
+            f"{self.corHumanas} - "
+            f"{self.corLinguagem} - "
+            f"{self.corMatematica} - "
+        )
+
 
 
 class Realiza(models.Model):
@@ -87,7 +122,11 @@ class Realiza(models.Model):
         PARTE_DESCONECTADA              = (9, "Parte desconectada")
 
 
-    statusRedacao = models.IntegerField(choices=StatusChoices.choices)
+    statusRedacao = models.IntegerField(
+        choices=StatusChoices.choices,
+        null=True,
+        blank=True,
+    )
 
     inscricaoCandidato = models.ForeignKey(
         to=Candidato,
@@ -97,36 +136,64 @@ class Realiza(models.Model):
 
     notaNatureza = models.DecimalField(
         decimal_places=1,
-        max_digits=4,
-        validators=[MinValueValidator(0), MaxValueValidator(1000)]
+        max_digits=5,
+        validators=[MinValueValidator(0), MaxValueValidator(1000)],
+        null=True,
+        blank=True,
     )
 
     notaHumanas = models.DecimalField(
         decimal_places=1,
-        max_digits=4,
-        validators=[MinValueValidator(0), MaxValueValidator(1000)]
+        max_digits=5,
+        validators=[MinValueValidator(0), MaxValueValidator(1000)],
+        null=True,
+        blank=True,
     )
 
     notaMatematica = models.DecimalField(
         decimal_places=1,
-        max_digits=4,
-        validators=[MinValueValidator(0), MaxValueValidator(1000)]
+        max_digits=5,
+        validators=[MinValueValidator(0), MaxValueValidator(1000)],
+        null=True,
+        blank=True,
     )
 
     notaLinguagem = models.DecimalField(
         decimal_places=1,
-        max_digits=4,
-        validators=[MinValueValidator(0), MaxValueValidator(1000)]
+        max_digits=5,
+        validators=[MinValueValidator(0), MaxValueValidator(1000)],
+        null=True,
+        blank=True,
     )
 
     notaRedacao = models.DecimalField(
         decimal_places=1,
-        max_digits=4,
-        validators=[MinValueValidator(0), MaxValueValidator(1000)]
+        max_digits=5,
+        validators=[MinValueValidator(0), MaxValueValidator(1000)],
+        null=True,
+        blank=True,
     )
 
     class TreineiroChoices(models.IntegerChoices):
         SIM = (1, "Sim")
         NAO = (0, "Não")
 
-    treineiro = models.IntegerField(choices=TreineiroChoices.choices)
+    treineiro = models.IntegerField(
+        choices=TreineiroChoices.choices,
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self) -> str:
+        return (
+            f"{self.idResultado} - "
+            f"{self.idProva} - "
+            f"{self.statusRedacao} - "
+            f"{self.inscricaoCandidato} - "
+            f"{self.notaNatureza} - "
+            f"{self.notaHumanas} - "
+            f"{self.notaMatematica} - "
+            f"{self.notaLinguagem} - "
+            f"{self.notaRedacao} - "
+            f"{self.treineiro} - "
+        )
