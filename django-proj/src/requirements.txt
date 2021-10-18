@@ -6,3 +6,4 @@ jellyfish==0.8.*
 gunicorn==20.0.4
 djangorestframework
 requests==2.26.0
+filesplit==3.0.2
