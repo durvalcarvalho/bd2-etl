@@ -1,3 +1,5 @@
+#!/bin/bash
+
 from fsplit.filesplit import Filesplit
 
 fs = Filesplit()

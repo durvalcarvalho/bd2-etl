@@ -1,27 +1,31 @@
-
-version: '3'
+version: "3.9"
 
 services:
-  # MySQL
+
   db:
     container_name: mysql
     image: mysql:latest
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sandbox
+      MYSQL_DATABASE: enem
       MYSQL_USER: adminadmmin
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - '3306:3306'
     volumes:
-      - ./mario_dump.sql:/mario_dump.sql
+      - ./dump.sql:/dump.sql
       - var_lib_mysql:/var/lib/mysql
-      - etc_mysql_confd_my_cnf:/etc/mysql/conf.d/my.cnf
+      - ./my.cnf:/etc/my.cnf
       - docker_entrypoint_initdb_d:/docker-entrypoint-initdb.d
+
+    deploy:
+      resources:
+        limits:
+          cpus: '3'
+          memory: 8192M
 
 volumes:
   var_lib_mysql:
-  etc_mysql_confd_my_cnf:
   docker_entrypoint_initdb_d:

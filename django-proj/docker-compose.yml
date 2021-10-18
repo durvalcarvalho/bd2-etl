@@ -17,10 +17,16 @@ services:
     volumes:
       - ./dump.sql:/dump.sql
       - var_lib_mysql:/var/lib/mysql
-      - etc_mysql_confd_my_cnf:/etc/mysql/conf.d/my.cnf
+      - ./my.cnf:/etc/my.cnf
       - docker_entrypoint_initdb_d:/docker-entrypoint-initdb.d
     networks:
       - app-network
+
+    deploy:
+      resources:
+        limits:
+          cpus: '3'
+          memory: 8192M
 
   backend:
     container_name: backend
