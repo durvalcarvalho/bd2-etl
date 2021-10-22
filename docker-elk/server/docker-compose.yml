@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    command:  ["./gunicorn_start.sh"]
+    ports:
+      - 8000:8000 # server port
+      - 8001:8001 # debug port
+    volumes:
+      - ./src:/src
+      - pip_cache:/usr/local/lib/python3/site-packages
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: app-network
+    driver: bridge
+
+volumes:
+  pip_cache:
+  var_lib_mysql:
+  etc_mysql_confd_my_cnf:
+  docker_entrypoint_initdb_d:

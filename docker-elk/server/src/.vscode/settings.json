@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "db",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "postgres",
+            "username": "postgres",
+            "password": "postgres",
+            "name": "docker-conn"
+        }
+    ],
+    "python.linting.pylintEnabled": true
+}

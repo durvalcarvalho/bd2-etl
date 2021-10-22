@@ -1,1 +1,1 @@
-mysqldump --skip-extended-insert -u root -p enem > dump.sql
+mysqldump --fields-enclosed-by='"' --skip-extended-insert -u root -p enem > dump.sql
