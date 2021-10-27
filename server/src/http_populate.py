@@ -51,6 +51,7 @@ def process(data_file):
             response = requests.post(url=url, json=data)
 
             if not response.ok:
+                print(response)
                 raise Exception("Request Failed")
 
             data = response.json()
@@ -67,6 +68,7 @@ def process(data_file):
             response = requests.post(url=url, json=data)
 
             if not response.ok:
+                print(response)
                 raise Exception("Request Failed")
 
             data = response.json()
@@ -92,6 +94,7 @@ def process(data_file):
             response = requests.post(url=url, json=data)
 
             if not response.ok:
+                print(response)
                 raise Exception("Request Failed")
 
             data = response.json()
@@ -132,6 +135,7 @@ def process(data_file):
             response = requests.post(url=url, json=data)
 
             if not response.ok:
+                print(response)
                 raise Exception("Request Failed")
 
             data = response.json()

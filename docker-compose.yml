@@ -12,9 +12,12 @@ services:
       - 8001:8001 # debug port
     volumes:
       - ./server/src:/src
+      - ./TF_F1_MatheusRodrigues:/src/TF_F1_MatheusRodrigues
       - pip_cache:/usr/local/lib/python3/site-packages
     networks:
       - elk
+    environment:
+      - NUM_WORKERS=4
 
   workers:
     # restart: always
@@ -46,7 +49,7 @@ services:
       - var_lib_mysql:/var/lib/mysql
       - docker_entrypoint_initdb_d:/docker-entrypoint-initdb.d
     environment:
-      - MYSQL_DATABASE=enem
+      - MYSQL_DATABASE=django_enem
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=root
 

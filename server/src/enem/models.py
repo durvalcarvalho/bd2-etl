@@ -3,21 +3,18 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Municipio(models.Model):
-    class Meta:
-       managed = False
-       db_table = 'MUNICIPIO'
 
-    codMunicipio = models.AutoField(db_column='codMunicipio', primary_key=True)
-    nomeMunicipio = models.CharField(db_column='nomeMunicipio', max_length=200)  # Field name made lowercase.
-    siglaUf = models.CharField(db_column='siglaUf', max_length=4)  # Field name made lowercase.
+    codMunicipio = models.AutoField(primary_key=True)
+    nomeMunicipio = models.CharField(max_length=200)  # Field name made lowercase.
+    siglaUf = models.CharField(max_length=4)  # Field name made lowercase.
 
     def __str__(self) -> str:
         return f"{self.codMunicipio} - {self.nomeMunicipio} - {self.siglaUf}"
 
 class Candidato(models.Model):
-    class Meta:
-       managed = False
-       db_table = 'CANDIDATO'
+    # class Meta:
+    #    managed = False
+    #    db_table = 'CANDIDATO'
     inscricao = models.CharField(max_length=12, primary_key=True)
 
     class SexoChoices(models.TextChoices):
@@ -41,16 +38,16 @@ class Candidato(models.Model):
 
     cor = models.IntegerField(choices=CorChoices.choices)
 
-    codMunicipio = models.ForeignKey('Municipio', models.DO_NOTHING, db_column='codMunicipio')
+    codMunicipio = models.ForeignKey('Municipio', models.DO_NOTHING)
 
     def __str__(self) -> str:
         return f"{self.inscricao} - {self.sexo} - {self.idade} - {self.cor} - {self.codMunicipio}"
 
 
 class Prova(models.Model):
-    class Meta:
-       managed = False
-       db_table = 'PROVA'
+    # class Meta:
+    #    managed = False
+    #    db_table = 'PROVA'
 
     class CorProvaChoices(models.IntegerChoices):
         AZUL = (1, "Azul")
@@ -70,15 +67,15 @@ class Prova(models.Model):
         CINZA = (12, "Cinza")
         CINZA_REAPLICACAO = (13, "Cinza (Reaplicação)")
 
-    idProva = models.AutoField(db_column='idProva', primary_key=True)  # Field name made lowercase.
+    idProva = models.AutoField(primary_key=True)  # Field name made lowercase.
 
-    corNatureza = models.CharField(db_column='corCiencias', max_length=2, blank=True, null=True)
+    corNatureza = models.CharField(max_length=2, blank=True, null=True)
 
-    corHumanas = models.CharField(db_column='corHumanas', max_length=2, blank=True, null=True)  # Field name made lowercase.
+    corHumanas = models.CharField(max_length=2, blank=True, null=True)  # Field name made lowercase.
 
-    corLinguagem = models.CharField(db_column='corLinguagem', max_length=2, blank=True, null=True)  # Field name made lowercase.
+    corLinguagem = models.CharField(max_length=2, blank=True, null=True)  # Field name made lowercase.
 
-    corMatematica = models.CharField(db_column='corMatematica', max_length=2, blank=True, null=True)  # Field name made lowercase.
+    corMatematica = models.CharField(max_length=2, blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self) -> str:
         return (
@@ -92,13 +89,13 @@ class Prova(models.Model):
 
 
 class Realiza(models.Model):
-    class Meta:
-       managed = False
-       db_table = 'realiza'
+    # class Meta:
+    #    managed = False
+    #    db_table = 'realiza'
 
-    idResultado = models.IntegerField(db_column='idResultado', primary_key=True)  # Field name made lowercase.
+    idResultado = models.AutoField(primary_key=True)  # Field name made lowercase.
 
-    idProva = models.ForeignKey(Prova, models.DO_NOTHING, db_column='idProva')  # Field name made lowercase.
+    idProva = models.ForeignKey(Prova, models.DO_NOTHING)  # Field name made lowercase.
 
     class StatusChoices(models.IntegerChoices):
         SEM_PROBLEMAS           = (1, "Sem problemas")
@@ -111,19 +108,19 @@ class Realiza(models.Model):
         PARTE_DESCONECTADA              = (9, "Parte desconectada")
 
 
-    statusRedacao = models.CharField(db_column='statusRedacao', max_length=1, blank=True, null=True)  # Field name made lowercase.
+    statusRedacao = models.CharField(max_length=1, blank=True, null=True)  # Field name made lowercase.
 
-    inscricaoCandidato = models.ForeignKey(Candidato, models.DO_NOTHING, db_column='inscricaoCandidato')  # Field name made lowercase.
+    inscricaoCandidato = models.ForeignKey(Candidato, models.DO_NOTHING)  # Field name made lowercase.
 
-    notaNatureza = models.CharField(db_column='notaCiencias', max_length=6, blank=True, null=True)  # Field name made lowercase.
+    notaNatureza = models.CharField(max_length=6, blank=True, null=True)  # Field name made lowercase.
 
-    notaHumanas = models.CharField(db_column='notaHumanas', max_length=6, blank=True, null=True)  # Field name made lowercase.
+    notaHumanas = models.CharField(max_length=6, blank=True, null=True)  # Field name made lowercase.
 
-    notaMatematica = models.CharField(db_column='notaMatematica', max_length=6, blank=True, null=True)  # Field name made lowercase.
+    notaMatematica = models.CharField(max_length=6, blank=True, null=True)  # Field name made lowercase.
 
-    notaLinguagem = models.CharField(db_column='notaLinguagem', max_length=6, blank=True, null=True)  # Field name made lowercase.
+    notaLinguagem = models.CharField(max_length=6, blank=True, null=True)  # Field name made lowercase.
 
-    notaRedacao = models.CharField(db_column='notaRedacao', max_length=6, blank=True, null=True)  # Field name made lowercase.
+    notaRedacao = models.CharField(max_length=6, blank=True, null=True)  # Field name made lowercase.
 
     class TreineiroChoices(models.IntegerChoices):
         SIM = (1, "Sim")

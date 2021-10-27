@@ -87,7 +87,7 @@ POSTGRES_PORT = int(os.getenv("POSTGRES_PORT", "5432"))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testing',
+        'NAME': 'django_enem',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'mysql',

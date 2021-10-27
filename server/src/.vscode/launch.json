@@ -30,7 +30,7 @@
             "program": "http_populate.py",
             "console": "integratedTerminal",
             "args": [
-                "scripts/files/main_1.csv",
+                "TF_F1_MatheusRodrigues/MICRODADOS_ENEM_2019_1.csv",
             ],
         }
     ]
