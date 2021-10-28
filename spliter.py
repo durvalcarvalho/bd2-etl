@@ -17,7 +17,7 @@ file_name = os.path.splitext(full_file_path)[0]
 
 rows_per_csv = int(sys.argv[2]) if len(sys.argv) > 2 else 5000
 
-with open(filename) as infile:
+with open(filename, encoding='ISO-8859-1') as infile:
     reader = csv.DictReader(infile)
     header = reader.fieldnames
     rows = [row for row in reader]
@@ -37,4 +37,6 @@ with open(filename) as infile:
             for row in page:
                 writer.writerow(row)
 
-        print('DONE splitting {} into {} files'.format(filename, len(pages)))
+        print('Splitting {} into {} files'.format(filename, len(pages)))
+
+    print('Done')

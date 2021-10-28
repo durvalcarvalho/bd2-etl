@@ -23,7 +23,7 @@ settings = {
     "GROUP_ID": "transform_worker_2",
     "KAFKA_BROKER_SERVERS": "kafka:9092",
     "TOPICS": (
-        'mysql-server.enem.realiza',
+        'mysql-server.django_enem.enem_realiza',
     )
 }
 
@@ -47,7 +47,7 @@ admin_client = KafkaAdminClient(bootstrap_servers=settings["KAFKA_BROKER_SERVERS
 
 def create_topic(topic_name):
     topic_list = [
-        NewTopic(name=topic_name, num_partitions=10, replication_factor=1)
+        NewTopic(name=topic_name, num_partitions=4, replication_factor=1)
     ]
     try:
         admin_client.create_topics(
@@ -170,7 +170,7 @@ def process_event(event: ConsumerRecord):
             except Exception:
                 new_data[key] = None
 
-    idProva = new_data["idProva"]
+    idProva = new_data["idProva_id"]
     response = requests.get(f'http://backend:8000/provas/{idProva}')
     prova_content = response.json()
 
@@ -179,7 +179,7 @@ def process_event(event: ConsumerRecord):
         if key.startswith('cor'):
             prova_content[key] = get_prova_color(prova_content[key])
 
-    new_data.pop("idProva")
+    new_data.pop("idProva_id")
     prova_content.pop("idProva")
     new_data["prova"] = prova_content
 
@@ -187,7 +187,7 @@ def process_event(event: ConsumerRecord):
 
     # ---------------------------------------------------------------------- #
 
-    inscricaoCandidato = new_data["inscricaoCandidato"]
+    inscricaoCandidato = new_data["inscricaoCandidato_id"]
     response = requests.get(f'http://backend:8000/candidatos/{inscricaoCandidato}')
     candidato_content = response.json()
 
@@ -212,7 +212,7 @@ def process_event(event: ConsumerRecord):
     else:
         candidato_content["sexo"] = None
 
-    new_data.pop("inscricaoCandidato")
+    new_data.pop("inscricaoCandidato_id")
 
     new_data["candidato"] = candidato_content
 
