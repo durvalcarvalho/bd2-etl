@@ -108,6 +108,6 @@ $ docker-compose up -f kibana
 # 15. Entre no Kafka Controle Center, usando a porta 0.0.0.0:8083 e configure o Kafka Connect. Para isso clique na Aba `Connect` na barra lateral, clique em adicionar um novo conector, clique em utilizar um arquivo, e selecione o arquivo `es-skink.properties`. Confirme a execução. A execução do Kafka Connect é um processo sem fim, sempre que um dado for transformado, o dado será carregado no ElasticSearch.
 
 # 16. Acesse o kibana utilizado a porta 0.0.0.0:5601 e acessa a aba de Dashboard. Quando a página carregar será mostrado um pop-up pedindo para criar um índice. Clique no pop-up e crie um índice. Volte para a aba do dashboard e crie os gráficos desejados com os dados já carregados no elasticsearch.
-
+```
 
 </div>
